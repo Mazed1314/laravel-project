@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div>
-                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.category.create')}}"style="font-size:1.7rem">Add</a>
+                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.category.create')}}">Add</a>
                     </div>
                     
                         <!-- table bordered -->
@@ -34,11 +34,11 @@
                                         <td><img width="80px" height="40px" class="float-first" src="{{asset('images/category/'.company()['company_id'].'/'.$cat->image)}}" alt=""></td>
                                         <td class="white-space-nowrap">
                                             <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$cat->id))}}" class="btn btn-info btn-sm">
-                                                Update
+                                                Edit
                                             </a>
-                                            <!-- <a href="javascript:void()" onclick="$('#form{{$cat->id}}').submit()">
-                                                <i class="bi bi-trash"></i>
-                                            </a> -->
+                                             <a href="javascript:void()" onclick="$('#form{{$cat->id}}').submit() "class="btn btn-danger btn-sm">
+                                             Delete
+                                            </a> 
                                             <form id="form{{$cat->id}}" action="{{route(currentUser().'.category.destroy',encryptor('encrypt',$cat->id))}}" method="post">
                                                 @csrf
                                                 @method('delete')

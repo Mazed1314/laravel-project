@@ -112,8 +112,10 @@ class SubcategoryController extends Controller
      * @param  \App\Models\Products\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcategory $subcategory)
+    public function destroy($id)
     {
-        //
+        $cat= Subcategory::findOrFail(encryptor('decrypt',$id));
+        $cat->delete();
+        return redirect()->back();
     }
 }

@@ -12,10 +12,12 @@
                 <?php
                 //print_r($subcategories);
                 ?>
+                    <div>
+                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.subcategory.create')}}">Add</a>
+                    </div>
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.subcategory.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
@@ -33,8 +35,11 @@
                                     <td>{{$sub->category?->category}}</td>
                                     <td>{{$sub->name}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.subcategory.edit',encryptor('encrypt',$sub->id))}}">
-                                            <i class="bi bi-pencil-square"></i>
+                                        <a href="{{route(currentUser().'.subcategory.edit',encryptor('encrypt',$sub->id))}}" class="btn btn-info btn-sm">
+                                                Edit
+                                        </a>
+                                        <a href="javascript:void()" onclick="$('#form{{$sub->id}}').submit()" class="btn btn-danger btn-sm">
+                                         Delete
                                         </a>
                                        
                                         <form id="form{{$sub->id}}" action="{{route(currentUser().'.subcategory.destroy',encryptor('encrypt',$sub->id))}}" method="post">
