@@ -1,39 +1,24 @@
-<ul class="menu">
-    <li class="sidebar-item">
-        <a href="{{route(currentUser().'.dashboard')}}" class='sidebar-link'>
-            <i class="bi bi-grid-fill"></i>
-            <span>{{__('dashboard') }}</span>
-        </a>
+<ul class="navbar-nav flex-column">
+    <li class="nav-divider">
+        Menu
     </li>
-    
-    <li class="sidebar-item has-sub">
-        <a href="#" class='sidebar-link'>
-            <i class="bi bi-gear-fill"></i>
-            <span>{{__('Settings')}}</span>
-        </a>
-        <ul class="submenu">
-            <li class="py-1"><a href="{{route(currentUser().'.company.index')}}">{{__('Company Details')}}</a></li>
-            <li class="submenu-item sidebar-item has-sub"><a href="#" class='sidebar-link'> {{__('User')}}</a>
-                <ul class="submenu">
-                    <li class="py-1"><a href="{{route(currentUser().'.users.index')}}">{{__('List')}}</a></li>
-                    <li class="py-1"><a href="{{route(currentUser().'.users.create')}}">{{__('Add New')}}</a></li>
-                </ul>
-            </li>
-
-            <li class="submenu-item sidebar-item has-sub"><a href="{{route(currentUser().'.branch.index')}}" class='sidebar-link'>{{__('Branch')}}</a>
-                <ul class="submenu">
-                    <li class="py-1"><a href="{{route(currentUser().'.branch.index')}}">{{__('List')}}</a></li>
-                    <li class="py-1"><a href="{{route(currentUser().'.branch.create')}}">{{__('Add New')}}</a></li>
-                </ul>
-            </li>
-            <li class="submenu-item sidebar-item has-sub"><a href="{{route(currentUser().'.warehouse.index')}}" class='sidebar-link'>{{__('Warehouse')}}</a>
-                <ul class="submenu">
-                    <li class="py-1"><a href="{{route(currentUser().'.warehouse.index')}}">{{__('List')}}</a></li>
-                    <li class="py-1"><a href="{{route(currentUser().'.warehouse.create')}}">{{__('Add New')}}</a></li>
-                </ul>
-            </li>
-		</ul>
-        
+    <li class="nav-item ">
+        <a class="nav-link active" href="{{route(currentUser().'.dashboard')}}"><i class="fa fa-fw fa-user-circle"></i>Dashboard <span class="badge badge-success">6</span></a>
     </li>
-
+    <li class="nav-item ">
+        <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Product <span class="badge badge-success">6</span></a>
+        <div id="submenu-1" class="collapse submenu" style="">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route(currentUser().'.category.index')}}">{{__('Category')}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route(currentUser().'.subcategory.index')}}">{{__('Sub Category')}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route(currentUser().'.childcategory.index')}}">{{__('Child Category')}}</a>
+                </li>
+            </ul>
+        </div>
+    </li>
 </ul>

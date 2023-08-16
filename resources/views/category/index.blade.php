@@ -11,10 +11,13 @@
         <div class="row" id="table-bordered">
             <div class="col-12">
                 <div class="card">
+                    <div>
+                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.category.create')}}"style="font-size:1.7rem">Add</a>
+                    </div>
+                    
                         <!-- table bordered -->
                         <div class="table-responsive">
                             <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.category.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                                 <thead>
                                     <tr>
                                         <th scope="col">{{__('#SL')}}</th>
@@ -30,8 +33,8 @@
                                         <td>{{$cat->category}} ({{$cat->products->count()}})</td>
                                         <td><img width="80px" height="40px" class="float-first" src="{{asset('images/category/'.company()['company_id'].'/'.$cat->image)}}" alt=""></td>
                                         <td class="white-space-nowrap">
-                                            <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$cat->id))}}">
-                                                <i class="bi bi-pencil-square"></i>
+                                            <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$cat->id))}}" class="btn btn-info btn-sm">
+                                                Update
                                             </a>
                                             <!-- <a href="javascript:void()" onclick="$('#form{{$cat->id}}').submit()">
                                                 <i class="bi bi-trash"></i>

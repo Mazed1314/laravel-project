@@ -22,7 +22,7 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
-        $subcategories=Subcategory::where(company())->paginate(10);
+        $subcategories=Subcategory::paginate(10);
         return view('subcategory.index',compact('subcategories'));
     }
 
@@ -33,7 +33,7 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::where(company())->get();
+        $categories = Category::get();
         return view('subcategory.create',compact('categories'));
     }
 
@@ -43,13 +43,12 @@ class SubcategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewRequest $request)
+    public function store(Request $request)
     {
         try{
             $subcat= new Subcategory;
             $subcat->category_id=$request->category;
             $subcat->name=$request->subCat;
-            $subcat->company_id=company()['company_id'];
             if($subcat->save())
                 return redirect()->route(currentUser().'.subcategory.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
@@ -79,7 +78,7 @@ class SubcategoryController extends Controller
      */
     public function edit($id)
     {
-        $category=Category::where(company())->get();
+        $category=Category::get();
         $subcategory= Subcategory::findOrFail(encryptor('decrypt',$id));
         return view('subcategory.edit',compact('subcategory','category'));
     }
@@ -91,7 +90,7 @@ class SubcategoryController extends Controller
      * @param  \App\Models\Products\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try{
             $subcat=Subcategory::findOrFail(encryptor('decrypt',$id));

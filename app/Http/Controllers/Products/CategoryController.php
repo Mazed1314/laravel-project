@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=Category::where(company())->paginate(10);
+        $categories=Category::paginate(10);
         return view('category.index',compact('categories'));
     }
 
@@ -42,14 +42,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewRequest $request)
+    public function store(Request $request)
     {
         try{
             $cat= new Category;
             $cat->category=$request->category;
-            $cat->company_id=company()['company_id'];
             if($request->has('image'))
-                $cat->image=$this->resizeImage($request->image,'images/category/'.company()['company_id'],true,200,200,false);
+                $cat->image=$this->resizeImage($request->image,'images/category',true,200,200,false);
             
             if($cat->save())
                 return redirect()->route(currentUser().'.category.index')->with($this->resMessageHtml(true,null,'Successfully created'));
@@ -91,12 +90,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try{
             $cat= Category::findOrFail(encryptor('decrypt',$id));
             $cat->category=$request->category;
-            $path='images/category/'.company()['company_id'];
             if($request->has('image') && $request->image)
                 if($this->deleteImage($cat->image,$path))
                     $cat->image=$this->resizeImage($request->image,$path,true,200,200,false);
