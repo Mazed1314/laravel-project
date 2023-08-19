@@ -112,8 +112,10 @@ class ChildcategoryController extends Controller
      * @param  \App\Models\Products\Childcategory  $childcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Childcategory $childcategory)
+    public function destroy($id)
     {
-        //
+        $cat= Childcategory::findOrFail(encryptor('decrypt',$id));
+        $cat->delete();
+        return redirect()->back();
     }
 }

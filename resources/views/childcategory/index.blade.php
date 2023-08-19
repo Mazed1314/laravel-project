@@ -9,6 +9,9 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
+                    <div>
+                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.childcategory.create')}}">Add</a>
+                    </div>
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <?php 
@@ -16,7 +19,6 @@
                         //print_r($childcategories);
                         ?>
                         <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.childcategory.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
@@ -32,12 +34,12 @@
                                     <td>{{$child->subcategory?->name}}</td>
                                     <td>{{$child->name}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route(currentUser().'.childcategory.edit',encryptor('encrypt',$child->id))}}">
-                                            <i class="bi bi-pencil-square"></i>
+                                        <a href="{{route(currentUser().'.childcategory.edit',encryptor('encrypt',$child->id))}}" class="btn btn-info btn-sm">
+                                                Edit
                                         </a>
-                                        <!-- <a href="javascript:void()" onclick="$('#form{{$child->id}}').submit()">
-                                            <i class="bi bi-trash"></i>
-                                        </a> -->
+                                        <a href="javascript:void()" onclick="$('#form{{$child->id}}').submit()" class="btn btn-danger btn-sm">
+                                         Delete
+                                        </a>
                                         <!-- <form id="form{{$child->id}}" action="{{route(currentUser().'.childcategory.destroy',encryptor('encrypt',$child->id))}}" method="post">
                                             @csrf
                                             @method('delete')
