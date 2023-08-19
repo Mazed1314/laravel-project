@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('subcategory_id')->index()->nullable();
             $table->unsignedBigInteger('childcategory_id')->index()->nullable();
             $table->unsignedBigInteger('brand_id')->index()->nullable();
-            $table->unsignedBigInteger('unit_id')->index();
+            $table->unsignedBigInteger('unit_id')->index()->nullable();
             $table->string('product_name');
             $table->string('bar_code');
             $table->string('description', 5000)->nullable();

@@ -18,6 +18,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route(currentUser().'.childcategory.index')}}">{{__('Child Category')}}</a>
                 </li>
+                    <a class="nav-link" href="{{route(currentUser().'.product.index')}}">{{__('Product')}}</a>
+                </li>
             </ul>
         </div>
     </li>

@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where(company())->paginate(10);
+        $products = Product::paginate(10);
         return view('product.index',compact('products'));
     }
 
@@ -41,12 +41,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::where(company())->get();
-        $subcategories = Subcategory::where(company())->get();
-        $childcategories = Childcategory::where(company())->get();
-        $brands = Brand::where(company())->get();
-        $units = Unit::all();
-        return view('product.create',compact('categories','subcategories','childcategories','brands','units'));
+        $categories = Category::get();
+        $subcategories = Subcategory::get();
+        $childcategories = Childcategory::get();
+        // $brands = Brand::get();
+        // $units = Unit::all();
+        return view('product.create',compact('categories','subcategories','childcategories'));
     }
 
     /**
@@ -55,11 +55,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddRequest $request)
+    public function store(Request $request)
     {
         try{
             $p= new Product;
-            $p->bar_code=company()['company_id'].time();
+            $p->time();
             $p->category_id=$request->category;
             $p->subcategory_id=$request->subcategory;
             $p->childcategory_id=$request->childcategory;
@@ -70,10 +70,10 @@ class ProductController extends Controller
             $p->price=$request->price;
             $p->purchase_price=$request->purchase_price;
             
-            $p->company_id=company()['company_id'];
+            // $p->company_id=company()['company_id'];
             $p->status=1;
             if($request->has('image'))
-                $p->image=$this->resizeImage($request->image,'images/product/'.company()['company_id'],true,200,200,false);
+                $p->image=$this->resizeImage($request->image,'images/product/',true,200,200,false);
 
             if($p->save())
                 return redirect()->route(currentUser().'.product.index')->with($this->resMessageHtml(true,null,'Successfully created'));
@@ -104,13 +104,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::where(company())->get();
-        $subcategories = Subcategory::where(company())->get();
-        $childcategories = Childcategory::where(company())->get();
-        $brands = Brand::where(company())->get();
-        $units = Unit::all();
+        $categories = Category::get();
+        $subcategories = Subcategory::get();
+        $childcategories = Childcategory::get();
+        // $brands = Brand::get();
+        // $units = Unit::all();
         $product= Product::findOrFail(encryptor('decrypt',$id));
-        return view('product.edit',compact('categories','subcategories','childcategories','brands','units','product'));
+        return view('product.edit',compact('categories','subcategories','childcategories'));
     }
 
     /**
@@ -120,7 +120,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try{
             $p= Product::findOrFail(encryptor('decrypt',$id));
@@ -135,15 +135,15 @@ class ProductController extends Controller
             $p->purchase_price=$request->purchase_price;
             if($request->has('image')){
                 if($p->image){
-                    if($this->deleteImage($p->image,'images/product/'.company()['company_id'])){
-                        $p->image=$this->resizeImage($request->image,'images/product/'.company()['company_id'],true,200,200,false);
+                    if($this->deleteImage($p->image,'images/product/')){
+                        $p->image=$this->resizeImage($request->image,'images/product/',true,200,200,false);
                     }
                 }else{
-                    $p->image=$this->resizeImage($request->image,'images/product/'.company()['company_id'],true,200,200,false);
+                    $p->image=$this->resizeImage($request->image,'images/product/',true,200,200,false);
                 }
             }
 
-            $p->company_id=company()['company_id'];
+            // $p->company_id=company()['company_id'];
             $p->status=1;
             if($p->save())
                 return redirect()->route(currentUser().'.product.index')->with($this->resMessageHtml(true,null,'Successfully created'));
