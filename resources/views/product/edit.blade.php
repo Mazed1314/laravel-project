@@ -59,33 +59,6 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
-                                            <label for="unit_id">{{__('Unit')}}</label>
-                                            <select class="form-control form-select" name="unit_id" id="unit_id">
-                                                <option value="">Select Unit</option>
-                                                @forelse($units as $u)
-                                                    <option value="{{$u->id}}" {{ old('name',$product->unit_id)==$u->id?"selected":""}}> {{ $u->name}}</option>
-                                                @empty
-                                                    <option value="">No Unit found</option>
-                                                @endforelse
-                                                
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="brand_id">{{__('Brand')}}</label>
-                                            <select class="form-control form-select" name="brand_id" id="brand_id">
-                                                <option value="">Select Brand</option>
-                                                @forelse($brands as $b)
-                                                    <option value="{{$b->id}}" {{ old('name',$product->brand_id)==$b->id?"selected":""}}> {{ $b->name}}</option>
-                                                @empty
-                                                    <option value="">No Brand found</option>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
                                             <label for="Product Name">{{__('Name')}}<span class="text-danger">*</span></label>
                                             <input type="text" id="productName" class="form-control"
                                                 placeholder="Product Name" value="{{ old('productName',$product->product_name)}}" name="productName">

@@ -57,36 +57,7 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="unit_id">{{__('Unit')}}</label>
-                                            <select class="form-control form-select" name="unit_id" id="unit_id">
-                                                <option value="">Select Unit</option>
-                                                @forelse($units as $u)
-                                                    <option value="{{$u->id}}" {{ old('name')==$u->id?"selected":""}}> {{ $u->name}}</option>
-                                                @empty
-                                                    <option value="">No Unit found</option>
-                                                @endforelse
-                                                @if($errors->has('name'))
-                                                <span class="text-danger"> {{ $errors->first('name') }}</span>
-                                                @endif
-                                            </select>
-                                        </div>
                                     </div> 
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="brand_id">{{__('Brand')}}</label>
-                                            <select class="form-control" name="brand_id" id="brand_id">
-                                                <option value="">Select Brand</option>
-                                                @forelse($brands as $b)
-                                                    <option value="{{$b->id}}" {{ old('name')==$b->id?"selected":""}}> {{ $b->name}}</option>
-                                                @empty
-                                                    <option value="">No Brand found</option>
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="Product Name">{{__('Product Name')}}<span class="text-danger">*</span></label>
