@@ -83,12 +83,12 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
-                                <h2 class="pageheader-title">@yield('pageheader','Home')</h2>
+                                <h2 class="pageheader-title">@yield('pageTitle','Home')</h2>
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">@yield('breadcrumb','Home')</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">@yield('pageName','Home')</li>
+                                            <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">@yield('breadcrumb','Dashboard')</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">@yield('pageSubTitle','Home')</li>
                                         </ol>
                                     </nav>
                                 </div>

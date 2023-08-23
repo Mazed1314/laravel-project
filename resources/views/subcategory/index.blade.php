@@ -38,7 +38,7 @@
                                         <a href="{{route(currentUser().'.subcategory.edit',encryptor('encrypt',$sub->id))}}" class="btn btn-info btn-sm">
                                                 Edit
                                         </a>
-                                        <a href="javascript:void()" onclick="$('#form{{$sub->id}}').submit()" class="btn btn-danger btn-sm">
+                                        <a href="javascript:void()" onclick="$('#form{{$sub->id}}').submit()" class="btn btn-success btn-sm">
                                          Delete
                                         </a>
                                        

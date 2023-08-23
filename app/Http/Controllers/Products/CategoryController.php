@@ -95,10 +95,16 @@ class CategoryController extends Controller
         try{
             $cat= Category::findOrFail(encryptor('decrypt',$id));
             $cat->category=$request->category;
-            if($request->has('image') && $request->image)
-                if($this->deleteImage($cat->image,$path))
-                    $cat->image=$this->resizeImage($request->image,$path,true,200,200,false);
-                
+            if($request->has('image')){
+                if($cat->image){
+                    if($this->deleteImage($cat->image,'images/category/')){
+                        $cat->image=$this->resizeImage($request->image,'images/category/',true,200,200,false);
+                    }
+                }else{
+                    $cat->image=$this->resizeImage($request->image,'images/category/',true,200,200,false);
+                }
+            }
+            $cat->status=1;
             if($cat->save())
                 return redirect()->route(currentUser().'.category.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else

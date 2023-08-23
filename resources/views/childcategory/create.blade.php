@@ -20,7 +20,7 @@
                                         <select class="form-control form-select" name="subcategory" id="subcategory">
                                             <option value="">Select Sub Category</option>
                                             @forelse($subcategories as $sub)
-                                                <option value="{{$sub->id}}" {{ old('subcategory')==$sub->id?"selected":""}}> {{ $sub->category->category}} -- {{ $sub->name}}</option>
+                                                <option value="{{$sub->id}}" {{ old('subcategory')==$sub->id?"selected":""}}> {{ $sub->category?->category}} -- {{ $sub->name}}</option>
                                             @empty
                                                 <option value="">No Category found</option>
                                             @endforelse
@@ -43,7 +43,7 @@
                                 </div>
 
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success me-1 mb-1">{{__('Save')}}</button>
+                                    <button type="submit" class="btn btn-danger me-1 mb-1">{{__('Save')}}</button>
                                     
                                 </div>
                             </div>
