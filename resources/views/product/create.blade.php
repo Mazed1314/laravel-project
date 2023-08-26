@@ -111,7 +111,7 @@
                                     </div>
                                     
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-success me-1 mb-1">{{__('Save')}}</button>
+                                        <button type="submit" class="btn btn-danger me-1 mb-1">{{__('Save')}}</button>
                                         
                                     </div>
                                 </div>

@@ -37,14 +37,14 @@
                                         <a href="{{route(currentUser().'.childcategory.edit',encryptor('encrypt',$child->id))}}" class="btn btn-info btn-sm">
                                                 Edit
                                         </a>
-                                        <a href="javascript:void()" onclick="$('#form{{$child->id}}').submit()" class="btn btn-danger btn-sm">
+                                        <a href="javascript:void()" onclick="$('#form{{$child->id}}').submit()" class="btn btn-success btn-sm">
                                          Delete
                                         </a>
-                                        <!-- <form id="form{{$child->id}}" action="{{route(currentUser().'.childcategory.destroy',encryptor('encrypt',$child->id))}}" method="post">
+                                        <form id="form{{$child->id}}" action="{{route(currentUser().'.childcategory.destroy',encryptor('encrypt',$child->id))}}" method="post">
                                             @csrf
                                             @method('delete')
                                             
-                                        </form> -->
+                                        </form>
                                     </td>
                                 </tr>
                                 @empty

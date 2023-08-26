@@ -101,8 +101,8 @@
                                     </div>
                                     
                                     <div class="col-12 d-flex justify-content-end">
-                                    <img width="80px" height="40px" class="float-first" src="{{asset('images/product/'.'/'.$product->image)}}" alt="">
-                                        <button type="submit" class="btn btn-warning me-1 mb-1">{{__('Save')}}</button>
+                                    <img width="80px" height="40px" class="float-first" src="{{asset('public/images/product/'.'/'.$product->image)}}" alt="">
+                                        <button type="submit" class="btn btn-warning me-1 mb-1">{{__('Update')}}</button>
                                         
                                     </div>
                                 </div>

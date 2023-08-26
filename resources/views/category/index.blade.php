@@ -26,7 +26,7 @@
                                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody> 
                                     @forelse($categories as $cat)
                                     <tr>
                                     <th scope="row">{{ ++$loop->index }}</th>
@@ -36,7 +36,7 @@
                                             <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$cat->id))}}" class="btn btn-info btn-sm">
                                                 Edit
                                             </a>
-                                             <a href="javascript:void()" onclick="$('#form{{$cat->id}}').submit() "class="btn btn-danger btn-sm">
+                                             <a href="javascript:void()" onclick="$('#form{{$cat->id}}').submit()" class="btn btn-success btn-sm">
                                              Delete
                                             </a> 
                                             <form id="form{{$cat->id}}" action="{{route(currentUser().'.category.destroy',encryptor('encrypt',$cat->id))}}" method="post">

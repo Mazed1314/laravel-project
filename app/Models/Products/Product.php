@@ -21,12 +21,4 @@ class Product extends Model
     public function childcategory(){
         return $this->belongsTo(Childcategory::class);
     }
-
-    public function brand(){
-        return $this->belongsTo(Brand::class);
-    }
-
-    public function unit(){
-        return $this->belongsTo(Unit::class);
-    }
 }
