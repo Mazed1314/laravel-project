@@ -10,8 +10,8 @@
               <div class="card">
                   <div class="card-content">
                       <div class="card-body">
-                          <form class="form" method="post" enctype="multipart/form-data" action="{{route(currentUser().'.purchase.store')}}">
-                              @csrf
+                          <form class="form" method="post" action="{{route(currentUser().'.purchase.store')}}">
+                            @csrf
                               <div class="row">
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
