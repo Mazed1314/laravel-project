@@ -24,11 +24,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label for="image">{{__('Image')}}</label>
-                                            <input type="file" id="image" class="form-control"
-                                                placeholder="Image" name="image">
-                                        </div>
+                                        <label for="contact_no">{{__('Contact No')}}<span class="text-danger">*</span></label>
+                                        <input type="text" id="contact_no" class="form-control" value="{{ old('contact_no')}}" name="contact_no" required>
+                                        @if($errors->has('contact_no'))
+                                        <span class="text-danger"> {{ $errors->first('contact_no') }}</span>
+                                        @endif
                                     </div>
                                     
                                     <div class="col-12 d-flex justify-content-end">

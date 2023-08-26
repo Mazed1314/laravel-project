@@ -36,9 +36,8 @@ class SupplierController extends Controller
     {
         try{
             $sup= new Supplier;
-            $sup->supplier=$request->supplier;
-            if($request->has('image'))
-                $sup->image=$this->resizeImage($request->image,'images/supplier',true,200,200,false);
+            $sup->supplier_name=$request->supplier;
+            $sup->contact_no=$request->contact_no;
             
             if($sup->save())
                 return redirect()->route(currentUser().'.supplier.index')->with($this->resMessageHtml(true,null,'Successfully created'));
@@ -62,12 +61,9 @@ class SupplierController extends Controller
     {
         try{
             $sup= Supplier::findOrFail(encryptor('decrypt',$id));
-            $sup->supplier=$request->supplier;
-            $path='images/supplier';
-            if($request->has('image') && $request->image)
-                if($this->deleteImage($sup->image,$path))
-                    $sup->image=$this->resizeImage($request->image,$path,true,200,200,false);
-                
+            $sup->supplier_name=$request->supplier;
+            $sup->contact_no=$request->contact_no;
+           
             if($sup->save())
                 return redirect()->route(currentUser().'.supplier.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
