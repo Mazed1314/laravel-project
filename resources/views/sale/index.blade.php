@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Purchase List'))
+@section('pageTitle',trans('Sale List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -14,11 +14,11 @@
                         <!-- table bordered -->
                         <div class="table-responsive">
                             <table class="table table-bordered mb-0">
-                                <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.purchase.create')}}">Add</a>
+                                <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.sale.create')}}">Add</a>
                                 <thead>
                                     <tr>
                                         <td scope="col">{{__('#SL')}}</td>
-                                        <td scope="col">{{__('Supplier')}}</td>
+                                        <td scope="col">{{__('Customer')}}</td>
                                         <td scope="col">{{__('Product')}}</td>
                                         <td scope="col">{{__('Price')}}</td>
                                         <td scope="col">{{__('Quantity')}}</td>
@@ -29,24 +29,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($purchases as $pur)
+                                    @forelse($sales as $s)
                                     <tr>
                                         <td scope="row">{{ ++$loop->index }}</td>
-                                        <td>{{$pur->supplier?->supplier_name}}</td>
-                                        <td>{{$pur->product?->product_name}}</td>
-                                        <td>{{$pur->price}}</td>
-                                        <td>{{$pur->quantity}}</td>
-                                        <td>{{$pur->discount}}</td>
-                                        <td>{{$pur->vat}}</td>
-                                        <td>{{$pur->total_amount}}</td>
+                                        <td>{{$s->customer?->customer_name}}</td>
+                                        <td>{{$s->product?->product_name}}</td>
+                                        <td>{{$s->price}}</td>
+                                        <td>{{$s->quantity}}</td>
+                                        <td>{{$s->discount}}</td>
+                                        <td>{{$s->vat}}</td>
+                                        <td>{{$s->total_amount}}</td>
                                         <td class="white-space-nowrap">
-                                            <a style="font-size:1.7rem" href="{{route(currentUser().'.purchase.edit',encryptor('encrypt',$pur->id))}}" class="btn btn-info btn-sm">
+                                            <a style="font-size:1.7rem" href="{{route(currentUser().'.sale.edit',encryptor('encrypt',$s->id))}}" class="btn btn-info btn-sm">
                                                 Edit
                                             </a>
-                                            <a href="javascript:void()" style="font-size:1.7rem" onclick="$('#form{{$pur->id}}').submit()" class="btn btn-success btn-sm">
+                                            <a href="javascript:void()" style="font-size:1.7rem" onclick="$('#form{{$s->id}}').submit()" class="btn btn-success btn-sm">
                                                 delete
                                             </a>
-                                            <form id="form{{$pur->id}}" action="{{route(currentUser().'.purchase.destroy',encryptor('encrypt',$pur->id))}}" method="post">
+                                            <form id="form{{$s->id}}" action="{{route(currentUser().'.sale.destroy',encryptor('encrypt',$s->id))}}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 

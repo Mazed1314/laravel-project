@@ -1,92 +1,83 @@
 <?php
+
 namespace App\Http\Controllers\Purchases;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Purchases\Purchase;
-use App\Models\Purchases\Purchase_details;
-use App\Models\Stock\Stock;
-use App\Models\Suppliers\Supplier;
+use App\Models\Stock;
 use App\Models\Products\Product;
-use App\Models\Settings\Branch;
-use App\Models\Settings\Warehouse;
-use App\Models\Settings\Company;
+use App\Models\Suppliers\Supplier;
 use Illuminate\Http\Request;
-use App\Http\Requests\Purchases\AddNewRequest;
-use App\Http\Requests\Purchases\UpdateRequest;
+use App\Http\Requests\Purchase\AddNewRequest;
+use App\Http\Requests\Purchase\UpdateRequest;
 use App\Http\Traits\ResponseTrait;
 use Exception;
+use DB;
 
 class PurchaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        if( currentUser()=='owner')
-            $purchases = Purchase::where(company())->paginate(10);
-        else
-            $purchases = Purchase::where(company())->where(branch())->paginate(10);
-            
-        
+    public function index(){
+        $purchases=Purchase::Paginate(10);
         return view('purchase.index',compact('purchases'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('purchase.create');
+        $suppliers = Supplier::get();
+        $products = Product::get();
+        return view('purchase.create',compact('suppliers','products'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(AddNewRequest $request)
     {
+        DB::beginTransaction();
         try{
-            $pur= new purchase;
-            $pur->name=$request->purchaseName;
-            if($request->has('image'))
-                $cat->image=$this->resizeImage($request->image,'images/purchase',true,200,200,false);
-
-            if($pur->save())
-                return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(true,null,'Successfully created'));
-            else
-                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
+            $pur= new Purchase;
+            $pur->supplier_id=$request->supplier_id;
+            $pur->product_id=$request->product_id;
+            $pur->price=$request->price;
+            $pur->quantity=$request->quantity;
+            $pur->discount=$request->discount;
+            $pur->vat=$request->vat;
+            $pur->total_amount=$request->total_amount;
+            
+            if($pur->save()){
+                $stock=new Stock;
+                $stock->purchase_id=$pur->id;
+                $stock->product_id=$pur->product_id;
+                $stock->quantity=$pur->quantity;
+                $stock->price=($request->total_amount / $pur->quantity);
+                //dd($stock);
+                if($stock->save()){
+                    DB::commit();
+                    return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                }else{
+                    return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(false,'error','Stock is not saved. Please try again'));
+                }
+            }
         }catch(Exception $e){
-            //dd($e);
+            DB::rollback();
+            dd($e);
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(purchase $purchase)
+    public function show($id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(purchase $purchase)
+    public function edit($id)
     {
-        $purchase=purchase::findOrFail(encryptor('decrypt',$id));
+        $purchase=Purchase::findOrFail(encryptor('decrypt',$id));
         return view('purchase.edit',compact('purchase'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, purchase $purchase)
+    public function update(UpdateRequest $request, $id)
     {
         try{
-            $pur= purchase::findOrFail(encryptor('decrypt',$id));
-            $pur->name=$request->purchaseName;
+            $pur= Purchase::findOrFail(encryptor('decrypt',$id));
+            $pur->purchase=$request->purchase;
+            $path='images/purchase';
+            if($request->has('image') && $request->image)
+                if($this->deleteImage($pur->image,$path))
+                    $pur->image=$this->resizeImage($request->image,$path,true,200,200,false);
+                
             if($pur->save())
                 return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
@@ -96,14 +87,12 @@ class PurchaseController extends Controller
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(purchase $purchase)
+    public function destroy($id)
     {
-        $pur= purchase::findOrFail(encryptor('decrypt',$id));
+        
+        $pur= Purchase::findOrFail(encryptor('decrypt',$id));
         $pur->delete();
         return redirect()->back();
     }
+    
 }

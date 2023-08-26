@@ -1,31 +1,31 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Create Category'))
+@section('pageTitle',trans('Create Sale'))
 @section('pageSubTitle',trans('Create'))
 
-@section('content')
+@section('content') 
   <section id="multiple-column-form">
       <div class="row match-height">
           <div class="col-12"> 
               <div class="card">
                   <div class="card-content">
                       <div class="card-body">
-                          <form class="form" method="post" enctype="multipart/form-data" action="{{route(currentUser().'.purchase.store')}}">
+                          <form class="form" method="post" enctype="multipart/form-data" action="{{route(currentUser().'.sale.store')}}">
                               @csrf
                               <div class="row">
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
-                                        <label for="name">{{__('Supplier Name')}}<span class="text-danger">*</span></label>
-                                        <select class="form-control form-select" name="supplier_id" id="supplier_id">
-                                            <option value="">Select Supplier</option>
-                                            @forelse($suppliers as $s)
-                                                <option value="{{$s->id}}" {{ old('supplier_id')==$s->id?"selected":""}}> {{ $s->supplier_name}}</option>
+                                        <label for="name">{{__('Customer Name')}}<span class="text-danger">*</span></label>
+                                        <select class="form-control form-select" name="customer_id" id="customer_id">
+                                            <option value="">Select Customer</option>
+                                            @forelse($customers as $s)
+                                                <option value="{{$s->id}}" {{ old('customer_id')==$s->id?"selected":""}}> {{ $s->customer_name}}</option>
                                             @empty
-                                                <option value="">No Supplier found</option>
+                                                <option value="">No Customer found</option>
                                             @endforelse
                                         </select>
-                                        @if($errors->has('supplier_id'))
-                                            <span class="text-danger"> {{ $errors->first('supplier_id') }}</span>
+                                        @if($errors->has('customer_id'))
+                                            <span class="text-danger"> {{ $errors->first('customer_id') }}</span>
                                         @endif
                                       </div>
                                   </div>

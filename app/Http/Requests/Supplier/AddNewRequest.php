@@ -8,10 +8,8 @@ class AddNewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -19,19 +17,12 @@ class AddNewRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'supplierName'=> 'required',
-            'countryName'=> 'required',
-            'contact'=> 'required',
-        ];
-    }
-    public function messages(){
-        return [
-            'required' => "The :attribute field is required"
+            //
         ];
     }
 }

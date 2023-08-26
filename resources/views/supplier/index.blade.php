@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Category List'))
+@section('pageTitle',trans('Supplier List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -12,7 +12,7 @@
             <div class="col-12">
                 <div class="card">
                     <div>
-                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.category.create')}}">Add</a>
+                        <a class="float-right btn btn-primary btn-sm mr-2" href="{{route(currentUser().'.supplier.create')}}">Add</a>
                     </div>
                     
                         <!-- table bordered -->
@@ -22,24 +22,24 @@
                                     <tr>
                                         <th scope="col">{{__('#SL')}}</th>
                                         <th scope="col">{{__('Name')}}</th>
-                                        <th scope="col">{{__('Image')}}</th>
+                                        <th scope="col">{{__('Contact')}}</th>
                                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    @forelse($categories as $cat)
+                                    @forelse($suppliers as $sup)
                                     <tr>
                                     <th scope="row">{{ ++$loop->index }}</th>
-                                        <td>{{$cat->category}} ({{$cat->products->count()}})</td>
-                                        <td><img width="80px" height="40px" class="float-first" src="{{asset('public/images/category/'.$cat->image)}}" alt=""></td>
+                                        <td>{{$sup->supplier_name}}</td>
+                                        <td>{{$sup->contact_no}}</td>
                                         <td class="white-space-nowrap">
-                                            <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$cat->id))}}" class="btn btn-info btn-sm">
+                                            <a href="{{route(currentUser().'.supplier.edit',encryptor('encrypt',$sup->id))}}" class="btn btn-info btn-sm">
                                                 Edit
                                             </a>
-                                             <a href="javascript:void()" onclick="$('#form{{$cat->id}}').submit()" class="btn btn-success btn-sm">
+                                             <a href="javascript:void()" onclick="$('#form{{$sup->id}}').submit()" class="btn btn-success btn-sm">
                                              Delete
                                             </a> 
-                                            <form id="form{{$cat->id}}" action="{{route(currentUser().'.category.destroy',encryptor('encrypt',$cat->id))}}" method="post">
+                                            <form id="form{{$sup->id}}" action="{{route(currentUser().'.supplier.destroy',encryptor('encrypt',$sup->id))}}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 
@@ -48,7 +48,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <th colspan="4" class="text-center">No Category Found</th>
+                                        <th colspan="4" class="text-center">No Supplier Found</th>
                                     </tr>
                                     @endforelse
                                 </tbody>

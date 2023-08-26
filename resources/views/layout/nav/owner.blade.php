@@ -21,13 +21,16 @@
                     <a class="nav-link" href="{{route(currentUser().'.product.index')}}">{{__('Product')}}</a>
                 </li>
                 </li>
-                    <a class="nav-link" href="{{route(currentUser().'.purchase.index')}}">{{__('Purchase')}}</a>
-                </li>
-                </li>
                     <a class="nav-link" href="{{route(currentUser().'.supplier.index')}}">{{__('Supplier')}}</a>
                 </li>
                 </li>
-                    <a class="nav-link" href="{{route(currentUser().'.customer.index')}}">{{__('Pustomer')}}</a>
+                    <a class="nav-link" href="{{route(currentUser().'.purchase.index')}}">{{__('Purchase')}}</a>
+                </li>
+                </li>
+                    <a class="nav-link" href="{{route(currentUser().'.customer.index')}}">{{__('Customer')}}</a>
+                </li>
+                </li>
+                    {{-- <a class="nav-link" href="{{route(currentUser().'.sale.index')}}">{{__('Sale')}}</a> --}}
                 </li>
             </ul>
         </div>
