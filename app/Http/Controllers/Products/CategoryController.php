@@ -104,11 +104,9 @@ class CategoryController extends Controller
                     $cat->image=$this->resizeImage($request->image,'images/category/',true,200,200,false);
                 }
             }
-            $cat->status=1;
+            
             if($cat->save())
                 return redirect()->route(currentUser().'.category.index')->with($this->resMessageHtml(true,null,'Successfully created'));
-            else
-                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){
             //dd($e);
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));

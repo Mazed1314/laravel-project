@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Create Category'))
+@section('pageTitle',trans('Create Purchase'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -75,7 +75,7 @@
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="total_amount">{{__('Total Amount')}}</label>
-                                          <input type="number" id="total_amount" class="form-control"
+                                          <input type="text" id="total_amount" class="form-control"
                                               placeholder="Total Price" name="total_amount">
                                       </div>
                                   </div>

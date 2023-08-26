@@ -36,10 +36,8 @@ class CustomerController extends Controller
     {
         try{
             $cus= new Customer;
-            $cus->customer=$request->customer;
-            if($request->has('image'))
-                $cus->image=$this->resizeImage($request->image,'images/customer',true,200,200,false);
-            
+            $cus->customer_name=$request->customer;
+            $cus->contact=$request->contact;
             if($cus->save())
                 return redirect()->route(currentUser().'.customer.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
@@ -62,12 +60,8 @@ class CustomerController extends Controller
     {
         try{
             $cus= Customer::findOrFail(encryptor('decrypt',$id));
-            $cus->customer=$request->customer;
-            $path='images/customer';
-            if($request->has('image') && $request->image)
-                if($this->deleteImage($cus->image,$path))
-                    $cus->image=$this->resizeImage($request->image,$path,true,200,200,false);
-                
+            $cus->customer_name=$request->customer;
+            $cus->contact=$request->contact;
             if($cus->save())
                 return redirect()->route(currentUser().'.customer.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else

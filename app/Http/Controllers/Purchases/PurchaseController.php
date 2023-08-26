@@ -16,6 +16,8 @@ use DB;
 
 class PurchaseController extends Controller
 {
+    use ResponseTrait;
+
     public function index(){
         $purchases=Purchase::Paginate(10);
         return view('purchase.index',compact('purchases'));
@@ -65,8 +67,10 @@ class PurchaseController extends Controller
     }
     public function edit($id)
     {
+        $suppliers = Supplier::get();
+        $products = Product::get();
         $purchase=Purchase::findOrFail(encryptor('decrypt',$id));
-        return view('purchase.edit',compact('purchase'));
+        return view('purchase.edit',compact('purchase','suppliers','products'));
     }
     public function update(UpdateRequest $request, $id)
     {
