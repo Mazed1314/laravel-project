@@ -10,36 +10,16 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="{{route(currentUser().'.supplier.update',encryptor('encrypt',$supplier->id))}}">
+                        <form class="form" method="post" action="{{route(currentUser().'.purchase.update',encryptor('encrypt',$purchase->id))}}">
                             @csrf
                             @method('patch')
-                            <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$supplier->id)}}">
+                            <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$purchase->id)}}">
                             <div class="row">
-
-                                    @if( currentUser()=='owner')
-                                        <div class="col-md-4 col-12">
-                                            <div class="form-group">
-                                                <label for="branch_id">Branches Name</label>
-                                                <select class="form-control" name="branch_id" id="branch_id">
-                                                    @forelse($branches as $b)
-                                                        <option value="{{ $b->id }}" {{old('branch_id',$supplier->branch_id)==$b->id?'selected':''}}>{{ $b->name }}</option>
-                                                    @empty
-                                                        <option value="">No branch found</option>
-                                                    @endforelse
-                                                </select>
-                                                @if($errors->has('supplierName'))
-                                                <span class="text-danger"> {{ $errors->first('supplierName') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @else
-                                        <input type="hidden" value="{{ branch()['branch_id']}}" name="branch_id">
-                                    @endif
 
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
                                         <label for="supplierName">Supplier Name</label>
-                                        <input type="text" id="supplierName" class="form-control" value="{{ old('supplierName',$supplier->supplier_name)}}" name="supplierName">
+                                        <input type="text" id="supplierName" class="form-control" value="{{ old('supplierName',$purchase->supplier_name)}}" name="supplierName">
                                         @if($errors->has('supplierName'))
                                         <span class="text-danger"> {{ $errors->first('supplierName') }}</span>
                                         @endif
