@@ -10,7 +10,7 @@
               <div class="card">
                   <div class="card-content">
                       <div class="card-body">
-                          <form class="form" method="post" enctype="multipart/form-data" action="{{route(currentUser().'.sale.store')}}">
+                          <form class="form" method="post" action="{{route(currentUser().'.sale.store')}}">
                               @csrf
                               <div class="row">
                                   <div class="col-md-4 col-12">
@@ -32,10 +32,10 @@
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="name">{{__('Product Name')}}<span class="text-danger">*</span></label>
-                                        <select class="form-control form-select" name="product_id" id="product_id">
+                                        <select class="form-control form-select" onchange="get_price(this)" name="product_id" id="product_id">
                                             <option value="">Select Product</option>
                                             @forelse($products as $p)
-                                                <option value="{{$p->id}}" {{ old('product_id')==$p->id?"selected":""}}> {{ $p->product_name}}</option>
+                                                <option value="{{$p->id}}" data-stock={{$p->stock->sum('quantity')}} data-price="{{$p->price}}" {{ old('product_id')==$p->id?"selected":""}}> {{ $p->product_name}}</option>
                                             @empty
                                                 <option value="">No Product found</option>
                                             @endforelse
@@ -48,34 +48,34 @@
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="price">{{__('Price')}}</label>
-                                          <input type="number" onkeyup="checkPrice()" id="price" class="form-control" placeholder="Price" name="price">
+                                          <input type="text" readonly onkeyup="checkPrice()" id="price" class="form-control" placeholder="Price" name="price">
                                       </div>
                                   </div>
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="quantity">{{__('Quantity')}}</label>
-                                          <input type="number" onkeyup="checkPrice()" id="quantity" class="form-control"
+                                          <input type="text" onkeyup="checkPrice()" id="quantity" class="form-control"
                                               placeholder="Quantity" name="quantity">
                                       </div>
                                   </div>
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="discount">{{__('Discount')}} %</label>
-                                          <input type="number" onkeyup="checkPrice()" id="discount" class="form-control"
+                                          <input type="text" onkeyup="checkPrice()" id="discount" class="form-control"
                                               placeholder="Discount" name="discount">
                                       </div>
                                   </div>
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="vat">{{__('Vat')}} %</label>
-                                          <input type="number" onkeyup="checkPrice()" id="vat" class="form-control"
+                                          <input type="text" onkeyup="checkPrice()" id="vat" class="form-control"
                                               placeholder="Vat" name="vat">
                                       </div>
                                   </div>
                                   <div class="col-md-4 col-12">
                                       <div class="form-group">
                                           <label for="total_amount">{{__('Total Amount')}}</label>
-                                          <input type="number" id="total_amount" class="form-control"
+                                          <input type="text" id="total_amount" class="form-control"
                                               placeholder="Total Price" name="total_amount">
                                       </div>
                                   </div>
@@ -98,12 +98,22 @@
 @push('scripts')
 
 <script>
+    function get_price(e){
+        let price=$(e).find(':selected').data('price');
+        $('#price').val(price);
+    }
     function checkPrice(){
         var price=$('#price').val()?parseFloat($('#price').val()):0;
         var quantity=$('#quantity').val()?parseFloat($('#quantity').val()):0;
         var vat=$('#vat').val()?parseFloat($('#vat').val()):0;
         var discount=$('#discount').val()?parseFloat($('#discount').val()):0;
-
+        /* product available stock */
+        let stock=parseFloat($("#product_id").find(':selected').data('stock'));
+        if(stock < quantity){
+            $('#quantity').val(stock);
+            quantity=stock;
+            alert("You cannot sale more than "+stock);
+        }
         var subprice=price*quantity;
         if(discount){
             subprice= (subprice - (subprice*(discount/100)))

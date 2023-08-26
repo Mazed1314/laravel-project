@@ -5,19 +5,21 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 
 use App\Models\Sales\Sales;
-use App\Models\Stock\Stock;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Models\Customers\Customer;
-use App\Http\Requests\Sale\AddNewRequest;
-use App\Http\Requests\Sale\UpdateRequest;
+use App\Models\Products\Product;
+use App\Http\Requests\Sales\AddNewRequest;
+use App\Http\Requests\Sales\UpdateRequest;
 use App\Http\Traits\ResponseTrait;
 use Exception;
 use DB;
 
 class SaleController extends Controller
 {
+    use ResponseTrait;
     public function index(){
-        $sales=Sale::Paginate(10);
+        $sales=Sales::Paginate(10);
         return view('sale.index',compact('sales'));
     }
     public function create()
@@ -30,7 +32,7 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
         try{
-            $s= new Sale;
+            $s= new Sales;
             $s->customer_id=$request->customer_id;
             $s->product_id=$request->product_id;
             $s->price=$request->price;
@@ -43,9 +45,8 @@ class SaleController extends Controller
                 $stock=new Stock;
                 $stock->sale_id=$s->id;
                 $stock->product_id=$s->product_id;
-                $stock->quantity=$s->quantity;
+                $stock->quantity="-".$s->quantity;
                 $stock->price=($request->total_amount / $s->quantity);
-                //dd($stock);
                 if($stock->save()){
                     DB::commit();
                     return redirect()->route(currentUser().'.sale.index')->with($this->resMessageHtml(true,null,'Successfully created'));
@@ -65,13 +66,13 @@ class SaleController extends Controller
     }
     public function edit($id)
     {
-        $sale=Sale::findOrFail(encryptor('decrypt',$id));
+        $sale=Sales::findOrFail(encryptor('decrypt',$id));
         return view('sale.edit',compact('sale'));
     }
     public function update(UpdateRequest $request, $id)
     {
         try{
-            $s= Sale::findOrFail(encryptor('decrypt',$id));
+            $s= Sales::findOrFail(encryptor('decrypt',$id));
             $s->sale=$request->sale;
             $path='images/sale';
             if($request->has('image') && $request->image)
@@ -90,7 +91,7 @@ class SaleController extends Controller
     public function destroy($id)
     {
         
-        $s= Sale::findOrFail(encryptor('decrypt',$id));
+        $s= Sales::findOrFail(encryptor('decrypt',$id));
         $s->delete();
         return redirect()->back();
     }
