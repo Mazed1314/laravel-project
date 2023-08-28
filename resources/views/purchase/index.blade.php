@@ -11,6 +11,9 @@
         <div class="row" id="table-bordered">
             <div class="col-12">
                 <div class="card">
+                    @if(Session::has('response'))
+                        {!!Session::get('response')['message']!!}
+                    @endif
                         <!-- table bordered -->
                         <div class="table-responsive">
                             <table class="table table-bordered mb-0">
@@ -40,10 +43,10 @@
                                         <td>{{$pur->vat}}</td>
                                         <td>{{$pur->total_amount}}</td>
                                         <td class="white-space-nowrap">
-                                            <a style="font-size:1.7rem" href="{{route(currentUser().'.purchase.edit',encryptor('encrypt',$pur->id))}}" class="btn btn-info btn-sm">
+                                            <a href="{{route(currentUser().'.purchase.edit',encryptor('encrypt',$pur->id))}}" class="btn btn-info btn-sm">
                                                 Edit
                                             </a>
-                                            <a href="javascript:void()" style="font-size:1.7rem" onclick="$('#form{{$pur->id}}').submit()" class="btn btn-success btn-sm">
+                                            <a href="javascript:void()" onclick="$('#form{{$pur->id}}').submit()" class="btn btn-success btn-sm">
                                                 delete
                                             </a>
                                             <form id="form{{$pur->id}}" action="{{route(currentUser().'.purchase.destroy',encryptor('encrypt',$pur->id))}}" method="post">

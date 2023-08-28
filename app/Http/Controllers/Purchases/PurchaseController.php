@@ -74,14 +74,30 @@ class PurchaseController extends Controller
     }
     public function update(UpdateRequest $request, $id)
     {
+        DB::beginTransaction();
         try{
             $pur= Purchase::findOrFail(encryptor('decrypt',$id));
-            $pur->purchase=$request->purchase;
+            $pur->supplier_id=$request->supplier_id;
+            $pur->product_id=$request->product_id;
+            $pur->price=$request->price;
+            $pur->quantity=$request->quantity;
+            $pur->discount=$request->discount;
+            $pur->vat=$request->vat;
+            $pur->total_amount=$request->total_amount;
                 
-            if($pur->save())
-                return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(true,null,'Successfully created'));
-            else
-                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
+            if($pur->save()){
+                $stock=Stock::where('purchase_id',$pur->id)->first();
+                $stock->product_id=$pur->product_id;
+                $stock->quantity=$pur->quantity;
+                $stock->price=($request->total_amount / $pur->quantity);
+                //dd($stock);
+                if($stock->save()){
+                    DB::commit();
+                    return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                }else{
+                    return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(false,'error','Stock is not saved. Please try again'));
+                }
+            }
         }catch(Exception $e){
             //dd($e);
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
@@ -91,7 +107,18 @@ class PurchaseController extends Controller
     {
         
         $pur= Purchase::findOrFail(encryptor('decrypt',$id));
-        $pur->delete();
+        $quantity=Stock::where('product_id',$pur->product_id)->sum('quantity');
+        if($quantity){
+            if($quantity >= $pur->quantity){
+                $stock=Stock::where('purchase_id',$pur->id)->delete();
+                $pur->delete();
+            }else{
+                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','You already sales from this purchase'));
+            }
+        }else{
+            return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','You already sales from this purchase'));
+        }
+        
         return redirect()->back();
     }
     
