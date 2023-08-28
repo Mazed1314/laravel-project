@@ -66,11 +66,14 @@ class SaleController extends Controller
     }
     public function edit($id)
     {
+        $customers = Customer::get();
+        $products = Product::get();
         $sale=Sales::findOrFail(encryptor('decrypt',$id));
-        return view('sale.edit',compact('sale'));
+        return view('sale.edit',compact('sale','customers','products'));
     }
     public function update(UpdateRequest $request, $id)
     {
+        DB::beginTransaction();
         try{
             $s= Sales::findOrFail(encryptor('decrypt',$id));
             $s->customer_id=$request->customer_id;
@@ -81,12 +84,19 @@ class SaleController extends Controller
             $s->vat=$request->vat;
             $s->total_amount=$request->total_amount;
                 
-            if($s->save())
-                return redirect()->route(currentUser().'.sale.index')->with($this->resMessageHtml(true,null,'Successfully created'));
-            else
-                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
-        }catch(Exception $e){
-            //dd($e);
+            if($s->save()){
+                $stock=Stock::where('sale_id',$s->id)->first();
+                $stock->product_id=$s->product_id;
+                $stock->quantity=$s->quantity;
+                $stock->price=($request->total_amount / $s->quantity);
+
+                if($stock->save()){
+                    DB::commit();
+                    return redirect()->route(currentUser().'.sale.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                }
+            }
+    }catch(Exception $e){
+            dd($e);
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }
     }
@@ -94,7 +104,17 @@ class SaleController extends Controller
     {
         
         $s= Sales::findOrFail(encryptor('decrypt',$id));
-        $s->delete();
+        $quantity=Stock::where('product_id',$s->product_id)->sum('quantity');
+        if($quantity){
+            if($quantity <= $s->quantity){
+                $stock=Stock::where('sale_id',$s->id)->delete();
+                $s->delete();
+            }else{
+                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','You already sales from this product'));
+            }
+        }else{
+            return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','You already sales from this product'));
+        }
         return redirect()->back();
     }
     
