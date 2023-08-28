@@ -73,11 +73,13 @@ class SaleController extends Controller
     {
         try{
             $s= Sales::findOrFail(encryptor('decrypt',$id));
-            $s->sale=$request->sale;
-            $path='images/sale';
-            if($request->has('image') && $request->image)
-                if($this->deleteImage($s->image,$path))
-                    $s->image=$this->resizeImage($request->image,$path,true,200,200,false);
+            $s->customer_id=$request->customer_id;
+            $s->product_id=$request->product_id;
+            $s->price=$request->price;
+            $s->quantity=$request->quantity;
+            $s->discount=$request->discount;
+            $s->vat=$request->vat;
+            $s->total_amount=$request->total_amount;
                 
             if($s->save())
                 return redirect()->route(currentUser().'.sale.index')->with($this->resMessageHtml(true,null,'Successfully created'));

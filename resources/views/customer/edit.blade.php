@@ -19,7 +19,7 @@
                                   <div class="col-md-6 col-12">
                                       <div class="form-group">
                                           <label for="name">{{__('Customer')}}<span class="text-danger">*</span></label>
-                                          <input type="text" id="name" value="{{ $customer->customer }}" class="form-control" placeholder="Customer Name" name="customer">
+                                          <input type="text" id="name" value="{{$customer->customer}}" class="form-control" placeholder="Customer Name" name="customer">
                                           @if($errors->has('customer'))
                                           <span class="text-danger"> {{ $errors->first('customer') }}</span>
                                           @endif
@@ -36,7 +36,6 @@
                                   </div>
                                   
                                   <div class="col-12 d-flex justify-content-end">
-                                        <img width="80px" height="40px" class="float-first" src="{{asset('public/images/customer/'.'/'.$customer->image)}}" alt="">
                                         <button type="submit" class="btn btn-warning mb-1">{{__('Update')}}</button>
                                   </div>
                               </div>

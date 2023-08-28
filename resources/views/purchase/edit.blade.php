@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Update Supplier'))
+@section('pageTitle',trans('Edit Purchase'))
 @section('pageSubTitle',trans('Update'))
 
 @section('content')
@@ -18,118 +18,59 @@
 
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="supplierName">Supplier Name</label>
-                                        <input type="text" id="supplierName" class="form-control" value="{{ old('supplierName',$purchase->supplier_name)}}" name="supplierName">
-                                        @if($errors->has('supplierName'))
-                                        <span class="text-danger"> {{ $errors->first('supplierName') }}</span>
+                                        <label for="supplier_id">Supplier Name</label>
+                                        <input type="text" id="supplier_id" class="form-control" value="{{ old('supplier_id',$purchase->supplier_name)}}" name="supplier_id">
+                                        @if($errors->has('supplier_id'))
+                                        <span class="text-danger"> {{ $errors->first('supplier_id') }}</span>
                                         @endif
                                     </div>
-                                    
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="contact">Contact</label>
-                                        <input type="text" id="contact" class="form-control" value="{{ old('contact',$supplier->contact)}}" name="contact">
-                                        @if($errors->has('contact'))
-                                        <span class="text-danger"> {{ $errors->first('contact') }}</span>
+                                        <label for="product">Product</label>
+                                        <input type="text" id="product_id" class="form-control" value="{{ old('product_id',$purchase->product_id)}}" name="product_id">
+                                        @if($errors->has('product_id'))
+                                        <span class="text-danger"> {{ $errors->first('product_id') }}</span>
                                         @endif
                                     </div>
-                                    
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="text" id="email" class="form-control" value="{{ old('email',$supplier->email)}}" name="email">
+                                        <label for="price">Price</label>
+                                        <input type="text" readonly onkeyup="checkPrice()" id="price" class="form-control" placeholder="Price" name="price">
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" id="phone" class="form-control" value="{{ old('phone',$supplier->phone)}}" name="phone">
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="taxNumber">TAX Number</label>
-                                        <input type="text" id="taxNumber" class="form-control" value="{{ old('taxNumber',$supplier->tax_number)}}" name="taxNumber">
+                                        <label for="quantity">'Quantity'</label>
+                                        <input type="text" onkeyup="checkPrice()" id="quantity" class="form-control"
+                                            placeholder="Quantity" name="quantity">
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="gstNumber">GST Number</label>
-                                        <input type="text" id="gstNumber" class="form-control" value="{{ old('gstNumber',$supplier->gst_number)}}" name="gstNumber">
+                                        <label for="discount">Discount %</label>
+                                        <input type="text" onkeyup="checkPrice()" id="discount" class="form-control"
+                                            placeholder="Discount" name="discount">
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="openingAmount">Opening Balance</label>
-                                        <input type="text" id="openingAmount" class="form-control" value="{{ old('openingAmount',$supplier->opening_balance)}}" name="openingAmount">
+                                        <label for="vat">Vat %</label>
+                                        <input type="text" onkeyup="checkPrice()" id="vat" class="form-control"
+                                            placeholder="Vat" name="vat">
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="countryName">Country</label>
-                                        <select class="form-control" name="countryName" id="countryName">
-                                            <option value="">Select Country</option>
-                                            @forelse($countries as $d)
-                                                <option value="{{$d->id}}" {{ old('countryName',$supplier->country_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                            @empty
-                                                <option value="">No Category found</option>
-                                            @endforelse
-                                        </select>
-                                        @if($errors->has('countryName'))
-                                        <span class="text-danger"> {{ $errors->first('countryName') }}</span>
-                                        @endif
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="divisionName">Division</label>
-                                        <select class="form-control" name="divisionName" id="divisionName">
-                                            <option value="">Select Country</option>
-                                            @forelse($divisions as $d)
-                                                <option value="{{$d->id}}" {{ old('divisionName',$supplier->division_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                            @empty
-                                                <option value="">No Category found</option>
-                                            @endforelse
-                                        </select>
+                                        <label for="total_amount">{{__('Total Amount')}}</label>
+                                        <input type="text" id="total_amount" class="form-control"
+                                            placeholder="Total Price" name="total_amount">
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="districtName">Division</label>
-                                        <select class="form-control" name="districtName" id="districtName">
-                                            <option value="">Select Country</option>
-                                            @forelse($districts as $d)
-                                                <option value="{{$d->id}}" {{ old('districtName',$supplier->district_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                            @empty
-                                                <option value="">No Category found</option>
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="postCode">Post Code</label>
-                                        <input type="text" id="postCode" class="form-control" value="{{ old('postCode',$supplier->post_code)}}" name="postCode">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label for="address" class="form-label">Address</label>
-                                        <textarea class="form-control" name="address" id="address" rows="2">{{ old('address',$supplier->address)}}</textarea>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
 @endif
 <div class="card ">
     <div class="card-header text-center">
-        <a href="../index.html"><img class="logo-img" src="../assets/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span>
+        <a href="../index.html"><img class="logo-img" src="./public/assets/images/logo.png" alt="logo"></a><span class="splash-description">Please enter your user information.</span>
     </div>
     <div class="card-body">
     <form action="{{route('login.check')}}" method="post">
@@ -34,7 +34,7 @@
     </div>
     <div class="card-footer bg-white p-0  ">
         <div class="card-footer-item card-footer-item-bordered">
-            <a href="{{route('register')}}" class="footer-link">Create An Account</a>
+            <a href="{{route('register')}}" class="footer-link btn btn-success btn-sm btn-block">Create An Account</a>
         </div>
     </div>
 </div>

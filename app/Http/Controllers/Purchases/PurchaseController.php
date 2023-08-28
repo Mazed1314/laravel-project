@@ -77,10 +77,6 @@ class PurchaseController extends Controller
         try{
             $pur= Purchase::findOrFail(encryptor('decrypt',$id));
             $pur->purchase=$request->purchase;
-            $path='images/purchase';
-            if($request->has('image') && $request->image)
-                if($this->deleteImage($pur->image,$path))
-                    $pur->image=$this->resizeImage($request->image,$path,true,200,200,false);
                 
             if($pur->save())
                 return redirect()->route(currentUser().'.purchase.index')->with($this->resMessageHtml(true,null,'Successfully created'));

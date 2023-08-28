@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Update Product'))
+@section('pageTitle',trans('Edit Product'))
 @section('pageSubTitle',trans('Update'))
 
 @section('content')
@@ -26,11 +26,10 @@
                                                 @empty
                                                     <option value="">No Category found</option>
                                                 @endforelse
-                                                
                                             </select>
-                                           
                                         </div>
                                     </div>
+
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="subcategory">{{__('Sub Category')}}</label>
@@ -44,6 +43,7 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="childcategory">{{__('Child Category')}}</label>
@@ -57,6 +57,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="Product Name">{{__('Name')}}<span class="text-danger">*</span></label>

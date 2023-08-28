@@ -66,19 +66,14 @@
                         </small>
                     @endif
                 </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-3">Sign Up</button>
                 <div class="form-group pt-2">
-                    <button class="btn btn-block btn-primary" type="submit">Register My Account</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-3">Sign Up</button>
                 </div>
             </div>
             <div class="card-footer bg-white">
-                <p>Already member? <a href="#" class="text-secondary">Login Here.</a></p>
+                <p class='text-gray-600'>Already have an account? <a href="{{route('login')}}" class="font-bold">Login</a>.</p>
             </div>
         </div>
     </form>
-<div class="text-center mt-3 text-lg fs-4">
-    <p class='text-gray-600'>Already have an account? <a href="{{route('login')}}" class="font-bold">Log
-            in</a>.</p>
-</div>
 
 @endsection

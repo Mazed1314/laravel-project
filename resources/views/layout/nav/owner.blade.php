@@ -30,7 +30,7 @@
                     <a class="nav-link" href="{{route(currentUser().'.customer.index')}}">{{__('Customer')}}</a>
                 </li>
                 </li>
-                    {{-- <a class="nav-link" href="{{route(currentUser().'.sale.index')}}">{{__('Sale')}}</a> --}}
+                    <a class="nav-link" href="{{route(currentUser().'.sale.index')}}">{{__('Sale')}}</a>
                 </li>
             </ul>
         </div>
