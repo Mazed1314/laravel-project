@@ -13,6 +13,7 @@ use App\Http\Controllers\Suppliers\SupplierController as supplier;
 use App\Http\Controllers\Customers\CustomerController as customer;
 use App\Http\Controllers\Purchases\PurchaseController as purchase;
 use App\Http\Controllers\Sales\SaleController as sales;
+use App\Http\Controllers\ReportController as report;
 /* Middleware */
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isOwner;
@@ -55,13 +56,10 @@ Route::group(['middleware'=>isOwner::class],function(){
         Route::resource('supplier',supplier::class,['as'=>'owner']);
         Route::resource('customer',customer::class,['as'=>'owner']);
         
-
-        //report
-        Route::get('/preport',[report::class,'preport'])->name('owner.preport');
-        Route::get('/sreport',[report::class,'stockreport'])->name('owner.sreport');
-        Route::get('/salreport',[report::class,'salesReport'])->name('owner.salreport');
-        
-        
+         //report
+         Route::get('/purchase_report',[report::class,'purchase_report'])->name('owner.purchase_report');
+         Route::get('/sale_report',[report::class,'sale_report'])->name('owner.sale_report');
+         Route::get('/stock_report',[report::class,'stock_report'])->name('owner.stock_report');
 
         //Product
         Route::resource('category',category::class,['as'=>'owner']);

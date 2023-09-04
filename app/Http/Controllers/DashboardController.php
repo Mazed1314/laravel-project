@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Stock;
 
 class DashboardController extends Controller
 {
@@ -17,7 +18,10 @@ class DashboardController extends Controller
     * owner dashboard
     */
     public function ownerDashboard(){
-        return view('dasbhoard.owner');
+        $sales=Stock::where('sale_id','>',0)->sum('price');
+        $purchase=Stock::where('purchase_id','>',0)->sum('price');
+        $stock=Stock::sum('quantity');
+        return view('dashboard.owner',compact('sales','purchase','stock'));
     }
     
     /*
